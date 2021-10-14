@@ -1,147 +1,114 @@
-var bow , arrow,  scene;
-var bowImage, arrowImage, green_balloonImage, red_balloonImage, pink_balloonImage ,blue_balloonImage, backgroundImage;
+var garden,rabbit,apple,orangeL,redL;
+var gardenImg,rabbitImg,carrotImg,orangeImg,redImg;
 
-var score=0;
 
 function preload(){
-  backgroundImage = loadImage("background0.png");
-  arrowImage = loadImage("arrow0.png");
-  bowImage = loadImage("bow0.png");
-  green_balloonImage = loadImage("green_balloon0.png");
-  pink_balloonImage = loadImage("pink_balloon0.png");
-  blue_balloonImage = loadImage("blue_balloon0.png");
-
-  
-   red_balloonImage = loadImage("red_balloon0.png");
-   //red_balloonImage = loadImage("redballoon0.png");
-   //red_balloonImage = loadImage("red_balloon0");
-   //red_balloonImage = loadImage("red_balloon0.png");
-  
+  gardenImg = loadImage("garden.png");
+  rabbitImg = loadImage("rabbit.png");
+  appleImg = loadImage("apple.png");
+  orangeImg = loadImage("orangeLeaf.png");
+  redImg = loadImage("redImage.png");
 }
 
 
+function setup(){
+  
+  createCanvas(400,400);
+// Moving background
+garden=createSprite(200,200);
+garden.addImage(gardenImg);
 
-function setup() {
-  createCanvas(400, 400);
-  
-  //creating background
-  scene = createSprite(0,0,400,400);
-  scene.addImage(backgroundImage);
-  scene.scale = 2.5
-  
-  // creating bow to shoot arrow
-  bow = createSprite(380,220,20,50);
-  bow.addImage(bowImage); 
-  bow.scale = 1;
-  
-   score = 0    
+
+//creating boy running
+rabbit = createSprite(160,340,20,20);
+rabbit.scale =0.09;
+rabbit.addImage(rabbitImg);
 }
 
 function draw() {
- background(0);
-  // moving ground
-    scene.velocityX = -3 
-
-    if (scene.x < 0){
-      scene.x = scene.width/2;
-    }
+  background(0);
   
-  //moving bow
-  bow.y = World.mouseY
+  // boy moving on Xaxis with mouse'
+  rabbit.x = World.mouseX;
   
-   // release arrow when space key is pressed
-  if (keyDown("space")) {
-    createArrow();
-    
-  }
+  edges= createEdgeSprites();
+  rabbit.collide(edges);
+  
+   drawSprites();
    
-  //creating continous enemies
-
-   var select_balloon = Math.round(random(1,4));
-  // var select_balloon = random(1,4);
-  // var select_balloon = Math.round(random());
-  // var select_balloon = Math.round(random(1,4,2));
   
-  if (World.frameCount % 100 == 0) {
-    if (select_balloon == 1) {
-      redBalloon();
-    } else if (select_balloon == 2) {
-      greenBalloon();
-    } else if (select_balloon == 3) {
-      blueBalloon();
-    } else {
-      pinkBalloon();
-    }
-  }  
-    
-  drawSprites();
-  text("Score: "+ score, 300,50);
+  var select_sprites = Math(random(1,3));
+
+// var select_sprites = Math.random(random(1,3));
+
+// var select_sprites = Math.round(1,3);
+
+// var select_sprites = Math.round(random(1,3));
+
+  
+  // if (frameCount % 50 == 0) {
+  //   if (select_sprites == 1) {
+  //     createApples();
+  //   } else if (select_sprites == 2) {
+  //     createOrange();
+  //   }else {
+  //     createRed();
+  //   }
+  // }
+
+  // if (frameCount % 80 == 0) {
+  //   if (select_sprites == 1) {
+  //     createApples();
+  //   } else if (select_sprites == 2) {
+  //     createOrange();
+  //   }
+  // }
+
+  // if (frameCount / 80 == 0) {
+  //   if (select_sprites == 1) {
+  //     createApples();
+  //   } else if (select_sprites == 2) {
+  //     createOrange();
+  //   }else {
+  //     createRed();
+  //   }
+  // }
+
+    if (frameCount % 80 = 0) {
+     if (select_sprites == 1) {
+         createApples();
+       } else if (select_sprites == 2) {
+         createOrange();
+       }else {
+         createRed();
+       }
+     }
+
+
+
 }
 
-
-// Creating  arrows for bow
- function createArrow() {
-  var arrow= createSprite(100, 100, 60, 10);
-  arrow.addImage(arrowImage);
-  arrow.x = 360;
-  arrow.y=bow.y;
-  arrow.velocityX = -4;
-  arrow.lifetime = 100;
-  arrow.scale = 0.3;
+function createApples() {
+apple = createSprite(random(50, 350),40, 10, 10);
+apple.addImage(appleImg);
+apple.scale=0.07;
+apple.velocityY = 3;
+apple.lifetime = 150;
+  
 }
 
-// function redBalloon() {
-//   var red = createSprite(0,50, 10, 10);
-//   red.addImage(red_balloonImage);
-//   red.velocityX = 3;
-//   red.lifetime = 150;
-//   red.scale = 0.1;
-// }
-
-// function redBalloon() {
-//   var red = createSprite(,Math.round(random(20, 370)),50, 10, 10);
-//   red.addImage(red_balloonImage);
-//   red.velocityX = 3;
-//   red.lifetime = 150;
-//   red.scale = 0.1;
-// }
-
-// function redBalloon() {
-//   var red = createSprite(0,Math.round(random(20, 370)), 10, 10);
-//   red.addImage(red_balloonImage);
-//   red.velocityX = 3;
-//   red.lifetime = 150;
-//   red.scale = 0.1;
-// }
-
-// function redBalloon() {
-//   var red = createSprite(0, 10, Math.round(random(20, 370)) , 10);
-//   red.addImage(red_balloonImage);
-//   red.velocityX = 3;
-//   red.lifetime = 150;
-//   red.scale = 0.1;
-// }
-
-function blueBalloon() {
-  var blue = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  blue.addImage(blue_balloonImage);
-  blue.velocityX = 3;
-  blue.lifetime = 150;
-  blue.scale = 0.1;
+function createOrange() {
+orangeL = createSprite(random(50, 350),40, 10, 10);
+orangeL.addImage(orangeImg);
+orangeL.scale=0.08;
+orangeL.velocityY = 3;
+orangeL.lifetime = 150;
 }
 
-function greenBalloon() {
-  var green = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  green.addImage(green_balloonImage);
-  green.velocityX = 3;
-  green.lifetime = 150;
-  green.scale = 0.1;
-}
-
-function pinkBalloon() {
-  var pink = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  pink.addImage(pink_balloonImage);
-  pink.velocityX = 3;
-  pink.lifetime = 150;
-  pink.scale = 1
+function createRed() {
+redL = createSprite(random(50, 350),40, 10, 10);
+redL.addImage(redImg);
+redL.scale=0.06;
+  redL.velocityY = 3;
+  redL.lifetime = 150;
 }
